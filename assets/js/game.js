@@ -22,14 +22,14 @@ var fight = function (enemyName) {
             if (confirmSkip) {
                 window.alert(playerName + ' has decided to skip this fight. Goodbye!');
                 // subtract money from playerMoney for skipping
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney)
                 break;
             }
         }
 
         // remove enemy's health by subtracting the amount set in the playerAttack variable
-        enemyHealth = enemyHealth - playerAttack;
+        enemyHealth = Math.max(0, enemyHealth - playerAttack);
         console.log(
             playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
         );
@@ -47,7 +47,7 @@ var fight = function (enemyName) {
         }
 
         // remove players's health by subtracting the amount set in the enemyAttack variable
-        playerHealth = playerHealth - enemyAttack;
+        playerHealth = Math.max(0, playerHealth - enemyAttack);
         console.log(
             enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
         );
@@ -77,7 +77,11 @@ var startGame = function () {
             //pick new enemy to figh tbased on teh index of the enemyNames array
             var pickedEnemyName = enemyNames[i];
 
-            enemyHealth = 50;
+            enemyHealth = randomNumber (40, 60);
+              };
+
+            return value;
+        };
 
             fight(pickedEnemyName);
 
@@ -92,18 +96,22 @@ var startGame = function () {
                     shop();
                 }
             }
-        }
-
-        else {
+        } else {
             window.alert("You have lost your robot in battle! Game OVer!");
             break;
         }
-    }
     //play again
     startGame();
     //after the loop ends, player is either out of health or enemies to fight, so run the endGame function
     endGame();
-};
+
+
+//funtion to generate a random numeric value
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+  
+    return value;
+  };
 
 //function to end the entire game
 var endGame = function () {
